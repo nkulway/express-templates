@@ -8,5 +8,11 @@
 </head>
 <body>
     <h1>Breakfast Foods!</h1>
+
+    ${ foods.map((food) => {
+        return `
+            <li><a href="/${food.handle}">${food.name}</a></li>
+            `
+    }).join('') }
 </body>
 </html>

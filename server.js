@@ -1,6 +1,7 @@
 const http = require("http");
 const express = require("express");
 const es6Renderer = require("express-es6-template-engine");
+const data = require('./data')
 
 const hostname = "127.0.0.1";
 const port = 3000;
@@ -14,7 +15,11 @@ app.set("views", "views") // where to look for templates
 app.set('view engine', 'html') // which template engine should express use
 
 app.get("/", (req, res) => {
-  res.render('home') // views/home.html
+  res.render('home', {
+      locals: {
+          foods: data
+      }
+  }) // views/home.html
 });
 
 server.listen(port, hostname, () => {

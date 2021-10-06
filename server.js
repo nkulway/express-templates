@@ -16,11 +16,38 @@ app.set('view engine', 'html') // which template engine should express use
 
 app.get("/", (req, res) => {
   res.render('home', {
+      // locals is variables available inside the template
       locals: {
-          foods: data
+          foods: data,
+          title: 'Breakfast Foods'
+      },
+      // partials is a list of partials to load for use in the template
+      partials: {
+          head: '/partials/head',
+          foot: '/partials/foot'
       }
   }) // views/home.html
 });
+
+app.get('/:handle', (req, res) => {
+    const food = data.find((profile) => {
+        return profile.handle === req.params.handle
+    })
+    if (!food) {
+        res.status(404).send('Could not find that food')
+    } else {
+    res.render('food-profile', {
+        locals: {
+            food: food,
+            title: `Breakfast Food: ${food.name}`
+        },
+        partials: {
+            head: '/partials/head',
+            foot: '/partials/foot'
+        }
+    })
+    }
+})
 
 server.listen(port, hostname, () => {
   console.log(`Server is running at http://${hostname}:${port}`);
